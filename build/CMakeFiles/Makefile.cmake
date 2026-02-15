@@ -51,5 +51,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/FlashSearch.dir/DependInfo.cmake"
+  "CMakeFiles/FlashApp.dir/DependInfo.cmake"
+  "CMakeFiles/FlashBenchmarks.dir/DependInfo.cmake"
   )

@@ -16,7 +16,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -31,7 +32,8 @@
 					"name" : "FlashSearch",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -39,9 +41,16 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "FlashSearch::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-FlashSearch-Debug-62df9a6f4729255a1362.json",
-					"name" : "FlashSearch",
+					"id" : "FlashApp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FlashApp-Debug-b0e73cf154d10c37b499.json",
+					"name" : "FlashApp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FlashBenchmarks::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FlashBenchmarks-Debug-dcb2450420293a35754d.json",
+					"name" : "FlashBenchmarks",
 					"projectIndex" : 0
 				}
 			]

@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/Administrator/Desktop/updown/Flash Search/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/FlashApp.dir/includes_CXX.rsp -g -std=c++23 -g -O0 -o CMakeFiles\\FlashApp.dir\\src\\main.cpp.obj -c \"C:\\Users\\Administrator\\Desktop\\updown\\Flash Search\\src\\main.cpp\"",
+  "file": "C:/Users/Administrator/Desktop/updown/Flash Search/src/main.cpp",
+  "output": "CMakeFiles/FlashApp.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/Administrator/Desktop/updown/Flash Search/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/FlashApp.dir/includes_CXX.rsp -g -std=c++23 -g -O0 -o CMakeFiles\\FlashApp.dir\\src\\common\\flash_search.cpp.obj -c \"C:\\Users\\Administrator\\Desktop\\updown\\Flash Search\\src\\common\\flash_search.cpp\"",
+  "file": "C:/Users/Administrator/Desktop/updown/Flash Search/src/common/flash_search.cpp",
+  "output": "CMakeFiles/FlashApp.dir/src/common/flash_search.cpp.obj"
+},
+{
+  "directory": "C:/Users/Administrator/Desktop/updown/Flash Search/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/FlashBenchmarks.dir/includes_CXX.rsp -g -std=c++23 -g -O0 -o CMakeFiles\\FlashBenchmarks.dir\\src\\benchmarks.cpp.obj -c \"C:\\Users\\Administrator\\Desktop\\updown\\Flash Search\\src\\benchmarks.cpp\"",
+  "file": "C:/Users/Administrator/Desktop/updown/Flash Search/src/benchmarks.cpp",
+  "output": "CMakeFiles/FlashBenchmarks.dir/src/benchmarks.cpp.obj"
+},
+{
+  "directory": "C:/Users/Administrator/Desktop/updown/Flash Search/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/FlashBenchmarks.dir/includes_CXX.rsp -g -std=c++23 -g -O0 -o CMakeFiles\\FlashBenchmarks.dir\\src\\common\\flash_search.cpp.obj -c \"C:\\Users\\Administrator\\Desktop\\updown\\Flash Search\\src\\common\\flash_search.cpp\"",
+  "file": "C:/Users/Administrator/Desktop/updown/Flash Search/src/common/flash_search.cpp",
+  "output": "CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.obj"
+}
+]
