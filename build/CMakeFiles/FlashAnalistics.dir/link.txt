@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\FlashAnalistics.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\FlashAnalistics.dir/objects.a @CMakeFiles\FlashAnalistics.dir\objects1.rsp
+C:\msys64\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\FlashAnalistics.dir/objects.a -Wl,--no-whole-archive -o FlashAnalistics.exe -Wl,--out-implib,libFlashAnalistics.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\FlashAnalistics.dir\linkLibs.rsp

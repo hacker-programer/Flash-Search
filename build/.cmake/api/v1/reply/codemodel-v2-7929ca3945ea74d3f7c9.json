@@ -41,9 +41,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "FlashApp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-FlashApp-Debug-b0e73cf154d10c37b499.json",
-					"name" : "FlashApp",
+					"id" : "FlashAnalistics::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FlashAnalistics-Debug-ccf50af30ed1ccded41d.json",
+					"name" : "FlashAnalistics",
 					"projectIndex" : 0
 				},
 				{

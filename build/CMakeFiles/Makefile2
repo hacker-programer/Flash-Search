@@ -62,12 +62,12 @@ CMAKE_BINARY_DIR = "C:\Users\Administrator\Desktop\updown\Flash Search\build"
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/FlashApp.dir/all
+all: CMakeFiles/FlashAnalistics.dir/all
 all: CMakeFiles/FlashBenchmarks.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/FlashApp.dir/codegen
+codegen: CMakeFiles/FlashAnalistics.dir/codegen
 codegen: CMakeFiles/FlashBenchmarks.dir/codegen
 .PHONY : codegen
 
@@ -76,41 +76,41 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/FlashApp.dir/clean
+clean: CMakeFiles/FlashAnalistics.dir/clean
 clean: CMakeFiles/FlashBenchmarks.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/FlashApp.dir
+# Target rules for target CMakeFiles/FlashAnalistics.dir
 
 # All Build rule for target.
-CMakeFiles/FlashApp.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashApp.dir\build.make CMakeFiles/FlashApp.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashApp.dir\build.make CMakeFiles/FlashApp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" --progress-num=1,2,3 "Built target FlashApp"
-.PHONY : CMakeFiles/FlashApp.dir/all
+CMakeFiles/FlashAnalistics.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" --progress-num=1,2,3 "Built target FlashAnalistics"
+.PHONY : CMakeFiles/FlashAnalistics.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/FlashApp.dir/rule: cmake_check_build_system
+CMakeFiles/FlashAnalistics.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" 3
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/FlashApp.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/FlashAnalistics.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" 0
-.PHONY : CMakeFiles/FlashApp.dir/rule
+.PHONY : CMakeFiles/FlashAnalistics.dir/rule
 
 # Convenience name for target.
-FlashApp: CMakeFiles/FlashApp.dir/rule
-.PHONY : FlashApp
+FlashAnalistics: CMakeFiles/FlashAnalistics.dir/rule
+.PHONY : FlashAnalistics
 
 # codegen rule for target.
-CMakeFiles/FlashApp.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashApp.dir\build.make CMakeFiles/FlashApp.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" --progress-num=1,2,3 "Finished codegen for target FlashApp"
-.PHONY : CMakeFiles/FlashApp.dir/codegen
+CMakeFiles/FlashAnalistics.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Administrator\Desktop\updown\Flash Search\build\CMakeFiles" --progress-num=1,2,3 "Finished codegen for target FlashAnalistics"
+.PHONY : CMakeFiles/FlashAnalistics.dir/codegen
 
 # clean rule for target.
-CMakeFiles/FlashApp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashApp.dir\build.make CMakeFiles/FlashApp.dir/clean
-.PHONY : CMakeFiles/FlashApp.dir/clean
+CMakeFiles/FlashAnalistics.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/clean
+.PHONY : CMakeFiles/FlashAnalistics.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/FlashBenchmarks.dir

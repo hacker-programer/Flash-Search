@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "FlashApp.exe"
+			"path" : "FlashAnalistics.exe"
 		},
 		{
-			"path" : "FlashApp.pdb"
+			"path" : "FlashAnalistics.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -95,7 +95,7 @@
 			]
 		}
 	],
-	"id" : "FlashApp::@6890427a1f51a3e7e1df",
+	"id" : "FlashAnalistics::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -111,8 +111,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "FlashApp",
-	"nameOnDisk" : "FlashApp.exe",
+	"name" : "FlashAnalistics",
+	"nameOnDisk" : "FlashAnalistics.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -134,7 +134,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/main.cpp",
+			"path" : "src/analistics.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
