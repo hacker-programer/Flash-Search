@@ -50,3 +50,12 @@ Actualizacion de las 2:13: Estuve pensando en cambiar dinamicamente de uint8_t a
 La solucion mas optima es usar un template de bool Use32Bits y en un futuro cercano Use64Bits usando probabemente enums, procedere a hacer eso y rejecutar los benchmarks
 Actualisacion de las 4:01: ya aregle el bug, durante el proceso sufri inconvenientes adaptando mi logica
 Nota: Esto explica los cambios repentinos no logicos del tiempo que atrivui al cache miss o que procesos de fondo lanzaban lanzaban tareas de alto costo, ahora los tiempos son mas constantes
+
+______
+
+Estoy creando un repositorio de github
+Lo hice, esta disponibe en https://github.com/hacker-programer/Flash-Search
+
+______
+
+Estoy buscando como optimizar mi rendimiento, para hacerlo se me ocurre usar prefetch no solo para cargar las siguientes letras sino para cargar los siguientes bytes en la memoria para tener las siguientes letras precargadas, para hacerlo bien deberia analizar el numero promedio de hijos de un nodo
