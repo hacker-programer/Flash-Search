@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/FlashAnalistics.dir/src/analistics.cpp.obj.d"
   "CMakeFiles/FlashAnalistics.dir/src/common/flash_search.cpp.obj"
   "CMakeFiles/FlashAnalistics.dir/src/common/flash_search.cpp.obj.d"
+  "CMakeFiles/FlashAnalistics.dir/src/common/load.cpp.obj"
+  "CMakeFiles/FlashAnalistics.dir/src/common/load.cpp.obj.d"
   "FlashAnalistics.exe"
   "FlashAnalistics.exe.manifest"
   "FlashAnalistics.pdb"

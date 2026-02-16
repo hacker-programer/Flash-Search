@@ -53,4 +53,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/FlashAnalistics.dir/DependInfo.cmake"
   "CMakeFiles/FlashBenchmarks.dir/DependInfo.cmake"
+  "CMakeFiles/FlashUnitTest.dir/DependInfo.cmake"
   )

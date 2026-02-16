@@ -7,7 +7,7 @@
                 "${workspaceFolder}/src/common/*"
             ],
             "defines": [],
-            "cStandard": "c17",
+            "cStandard": "c23",
             "cppStandard": "c++23",
             "intelliSenseMode": "windows-gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"

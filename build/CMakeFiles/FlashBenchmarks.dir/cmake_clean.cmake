@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/FlashBenchmarks.dir/src/benchmarks.cpp.obj.d"
   "CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.obj"
   "CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.obj.d"
+  "CMakeFiles/FlashBenchmarks.dir/src/common/load.cpp.obj"
+  "CMakeFiles/FlashBenchmarks.dir/src/common/load.cpp.obj.d"
   "FlashBenchmarks.exe"
   "FlashBenchmarks.exe.manifest"
   "FlashBenchmarks.pdb"

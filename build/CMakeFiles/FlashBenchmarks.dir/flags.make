@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = @CMakeFiles/FlashBenchmarks.dir/includes_CXX.rsp
 
-CXX_FLAGS = -g -std=c++23 -g -O0
+CXX_FLAGS = -g -std=c++23 -g -O0 -Wall -Wextra
 

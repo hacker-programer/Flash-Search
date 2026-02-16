@@ -2,10 +2,23 @@
 	"configurations" : 
 	[
 		{
-			"abstractTargets" : [],
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "flash_config::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-flash_config-Debug-d0b26885b7e966e232e7.json",
+					"name" : "flash_config",
+					"projectIndex" : 0
+				}
+			],
 			"directories" : 
 			[
 				{
+					"abstractTargetIndexes" : 
+					[
+						0
+					],
 					"build" : ".",
 					"jsonFile" : "directory-.-Debug-f6f22219c74102c3da70.json",
 					"minimumCMakeVersion" : 
@@ -17,7 +30,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -25,6 +39,10 @@
 			"projects" : 
 			[
 				{
+					"abstractTargetIndexes" : 
+					[
+						0
+					],
 					"directoryIndexes" : 
 					[
 						0
@@ -33,7 +51,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -42,15 +61,22 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "FlashAnalistics::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-FlashAnalistics-Debug-ccf50af30ed1ccded41d.json",
+					"jsonFile" : "target-FlashAnalistics-Debug-9fc59ea73475c5805032.json",
 					"name" : "FlashAnalistics",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "FlashBenchmarks::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-FlashBenchmarks-Debug-dcb2450420293a35754d.json",
+					"jsonFile" : "target-FlashBenchmarks-Debug-36073417012607e96dfe.json",
 					"name" : "FlashBenchmarks",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FlashUnitTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FlashUnitTest-Debug-7b465c0b2e284a9edfe4.json",
+					"name" : "FlashUnitTest",
 					"projectIndex" : 0
 				}
 			]

@@ -8,56 +8,19 @@
 #include <unordered_set>
 #include <random>
 #include <fstream>
+#include <load.h>
 
 int main() {
-    FlashSearch<true> search;
+    FlashSearch search;
     const size_t iteraciones = 100000;
-    const size_t tests = 100;
+    const size_t tests = 10;
 
-
-    // Inicialización de estructuras
-    std::vector<std::string> v = {};
-    std::set<std::string> s = {};
-    std::map<std::string, int> m = {};
-    std::unordered_map<std::string, int> um = {};
-    std::unordered_set<std::string> us = {};
-
-    std::ifstream archivo("listado-general.txt");
-
-    if (!archivo.is_open()) {
-        std::cerr << "¡Error! No encontré el listado-general.txt" << std::endl;
-        return 1;
-    }
-
-    std::string linea;
-
-    while (std::getline(archivo, linea)) {
-        if (linea.empty()) continue;
-
-        // Aquí deberías pasar 'linea' por tu función de limpieza
-        // para que FlashSearch no explote con caracteres raros.
-        std::string limpia = search.normalize_utf8(linea); 
-        
-        if (!limpia.empty()) {
-            v.push_back(limpia);
-            s.insert(limpia);
-            us.insert(limpia);
-            m[limpia] = 1;
-            um[limpia] = 1;
-            
-            // Cargamos tu FlashSearch
-            // Recordá que add necesita el texto mapeado
-            std::string para_mapear = limpia;
-            search.add(map_text(para_mapear.data()));
-        }
-    }
     std::random_device rd;  
     std::mt19937 gen(rd()); // Mersenne Twister: rápido y confiable
-
+    auto data = get_data("listado-general.txt", search);
     // 2. Definimos el rango [0, size - 1]
-    std::uniform_int_distribution<> dis(0, v.size() - 1);
+    std::uniform_int_distribution<> dis(0, data.v.size() - 1);
 
-    // 3. Obtenemos el índice y el elemento
 
 
 
@@ -92,7 +55,7 @@ int main() {
     for (size_t i=0; i<tests; ++i) {
         std::cout << "Test " << i+1 << ":" << std::endl;
         int indiceAzar = dis(gen);
-        std::string s_nombre = v[indiceAzar];
+        std::string s_nombre = data.v[indiceAzar];
         std::cout << "Palabra elegida: " << s_nombre << ", tamaño: " << s_nombre.size() << std::endl;
         bool WithPrefetch = s_nombre.size() > 11;
 
@@ -101,34 +64,38 @@ int main() {
         // 1. Vector (O(N))
         if (vFound) {
             benchmark("std::vector", [&]() {
-                auto it = std::find(v.begin(), v.end(), s_nombre);
+                auto it = std::find(data.v.begin(), data.v.end(), s_nombre);
             });
         }
 
         // 2. Set (O(log N))
         benchmark("std::set", [&]() {
-            auto it = s.find(s_nombre);
+            auto it = data.s.find(s_nombre);
         });
 
         // 3. Map (O(log N))
         benchmark("std::map", [&]() {
-            auto it = m.find(s_nombre);
+            auto it =  data.m.find(s_nombre);
         });
 
         // 4. Unordered Map (O(1))
         benchmark("std::un_map", [&]() {
-            auto it = um.find(s_nombre);
+            auto it = data.um.find(s_nombre);
         });
         benchmark("std::un_set", [&]() {
-            auto it = us.find(s_nombre);
+            auto it = data.us.find(s_nombre);
         });
         std::string s_mapeada = s_nombre;
         char* data_lista = map_text(s_mapeada.data());
         benchmark("FlashSearch::Search", [&]() {
-            search.search(data_lista);
+            auto it = search.search(data_lista, s_nombre.size());
         });
         benchmark("FlashSearch::fast_search", [&]() {
-            search.fast_search(data_lista, WithPrefetch);
+            auto it = search.fast_search(data_lista, s_nombre.size(), WithPrefetch);
+            if (!it) {
+                std::cout << "FATAL ERROR" << std::endl;
+                exit(2);
+            } 
         });
     }
 }

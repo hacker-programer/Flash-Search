@@ -141,6 +141,19 @@ FlashBenchmarks/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/build
 .PHONY : FlashBenchmarks/fast
 
+#=============================================================================
+# Target rules for targets named FlashUnitTest
+
+# Build rule for target.
+FlashUnitTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 FlashUnitTest
+.PHONY : FlashUnitTest
+
+# fast build rule for target.
+FlashUnitTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/build
+.PHONY : FlashUnitTest/fast
+
 src/analistics.obj: src/analistics.cpp.obj
 .PHONY : src/analistics.obj
 
@@ -196,6 +209,7 @@ src/common/flash_search.obj: src/common/flash_search.cpp.obj
 src/common/flash_search.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/flash_search.cpp.obj
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/flash_search.cpp.obj
 .PHONY : src/common/flash_search.cpp.obj
 
 src/common/flash_search.i: src/common/flash_search.cpp.i
@@ -205,6 +219,7 @@ src/common/flash_search.i: src/common/flash_search.cpp.i
 src/common/flash_search.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/flash_search.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/flash_search.cpp.i
 .PHONY : src/common/flash_search.cpp.i
 
 src/common/flash_search.s: src/common/flash_search.cpp.s
@@ -214,7 +229,62 @@ src/common/flash_search.s: src/common/flash_search.cpp.s
 src/common/flash_search.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/flash_search.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/flash_search.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/flash_search.cpp.s
 .PHONY : src/common/flash_search.cpp.s
+
+src/common/load.obj: src/common/load.cpp.obj
+.PHONY : src/common/load.obj
+
+# target to build an object file
+src/common/load.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/load.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/load.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/load.cpp.obj
+.PHONY : src/common/load.cpp.obj
+
+src/common/load.i: src/common/load.cpp.i
+.PHONY : src/common/load.i
+
+# target to preprocess a source file
+src/common/load.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/load.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/load.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/load.cpp.i
+.PHONY : src/common/load.cpp.i
+
+src/common/load.s: src/common/load.cpp.s
+.PHONY : src/common/load.s
+
+# target to generate assembly for a file
+src/common/load.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashAnalistics.dir\build.make CMakeFiles/FlashAnalistics.dir/src/common/load.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashBenchmarks.dir\build.make CMakeFiles/FlashBenchmarks.dir/src/common/load.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/common/load.cpp.s
+.PHONY : src/common/load.cpp.s
+
+src/unit-test.obj: src/unit-test.cpp.obj
+.PHONY : src/unit-test.obj
+
+# target to build an object file
+src/unit-test.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/unit-test.cpp.obj
+.PHONY : src/unit-test.cpp.obj
+
+src/unit-test.i: src/unit-test.cpp.i
+.PHONY : src/unit-test.i
+
+# target to preprocess a source file
+src/unit-test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/unit-test.cpp.i
+.PHONY : src/unit-test.cpp.i
+
+src/unit-test.s: src/unit-test.cpp.s
+.PHONY : src/unit-test.s
+
+# target to generate assembly for a file
+src/unit-test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FlashUnitTest.dir\build.make CMakeFiles/FlashUnitTest.dir/src/unit-test.cpp.s
+.PHONY : src/unit-test.cpp.s
 
 # Help Target
 help:
@@ -226,6 +296,7 @@ help:
 	@echo ... rebuild_cache
 	@echo ... FlashAnalistics
 	@echo ... FlashBenchmarks
+	@echo ... FlashUnitTest
 	@echo ... src/analistics.obj
 	@echo ... src/analistics.i
 	@echo ... src/analistics.s
@@ -235,6 +306,12 @@ help:
 	@echo ... src/common/flash_search.obj
 	@echo ... src/common/flash_search.i
 	@echo ... src/common/flash_search.s
+	@echo ... src/common/load.obj
+	@echo ... src/common/load.i
+	@echo ... src/common/load.s
+	@echo ... src/unit-test.obj
+	@echo ... src/unit-test.i
+	@echo ... src/unit-test.s
 .PHONY : help
 
 

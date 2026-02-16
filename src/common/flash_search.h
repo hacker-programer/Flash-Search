@@ -8,244 +8,114 @@
 #include <new>     // Para placement new
 #include <cstring>
 #include <cstdlib>
+#include <malloc.h>
+
 
 extern const std::array<unsigned char, 256> map_fast;
 extern const std::array<unsigned char, 256> unmap_fast;
 
-template <bool Use32Bits>
 struct Letter;
 
-template <bool Use32Bits>
-struct RelativePtr {
-    std::conditional_t<Use32Bits, uint32_t, uint16_t> offset = 0; 
+struct alignas(64) Letter {
+    // 28 punteros de 16 bits = 56 bytes
+    
+    uint16_t offsets[28]; 
+    // 1 numero de 32 bits = 4 bytes
+    uint32_t page;
+    
+    // 1 byte. Total = 61 bytes exactos. Una sola línea de caché L1.
+    bool final_end;       
 
-    template<typename T>
-    T* resolve(void* base_addr) const {
-        if (offset == 0) return nullptr;
-        return reinterpret_cast<T*>(static_cast<char*>(base_addr) + offset);
+    // Constructor vital para limpiar la basura de la RAM
+    Letter() {
+        std::memset(this, 0, sizeof(Letter));
+        page = 0xFFFFFFFF; // Ahora sí evitamos que el 'if' haga desastres en la primera vuelta.
     }
 
     template<typename T>
-    void set(void* base_addr, T* target_addr) {
-        if (!target_addr) {
-            offset = 0;
-            return;
+    inline T* resolve(unsigned char i, void* base_addr) const {
+        // Si el offset es 0, no hay hijo
+        if (offsets[i] == 0) return nullptr;
+
+        // 1. Calculamos el desplazamiento total usando uintptr_t para evitar desbordamientos
+        // Usamos 65536 (1 << 16) para máxima velocidad
+        uintptr_t displacement = (static_cast<uintptr_t>(page) << 16) + (static_cast<uintptr_t>(offsets[i]) << 6);
+
+        // 2. Sumamos el desplazamiento a la base y casteamos a PUNTERO (T*)
+        return reinterpret_cast<T*>(static_cast<char*>(base_addr) + displacement);
+    }
+
+    template<typename T>
+    void set(unsigned char i, T* target_addr, uint32_t Npage, uint16_t N_offset, size_t& cursor, void* buffer_base) {
+        if (!target_addr) return;
+
+        // Si la página del padre cambia, hay que mover a todos los hijos 
+        // a la nueva página para que el cálculo 'resolve' siga funcionando.
+        if (Npage != page && page != 0xFFFFFFFF) {
+            for (uint16_t& e : offsets) {
+                if (e != 0) {
+                    uintptr_t old_addr = reinterpret_cast<uintptr_t>(buffer_base) + (static_cast<uintptr_t>(page) << 16) + (static_cast<uintptr_t>(e) << 6);
+                    
+                    // Alineamos y movemos
+                    cursor = (cursor + alignof(T) - 1) & ~(alignof(T) - 1);
+                    uintptr_t new_addr = reinterpret_cast<uintptr_t>(buffer_base) + cursor;
+
+                    std::memcpy(reinterpret_cast<void*>(new_addr), reinterpret_cast<void*>(old_addr), sizeof(T));
+                    
+                    e = static_cast<uint16_t>((cursor & 0xFFFF) >> 6);
+                    cursor += sizeof(T);
+                }
+            }
         }
-        offset = static_cast<decltype(offset)>(reinterpret_cast<char*>(target_addr) - static_cast<char*>(base_addr));
+
+        page = Npage;
+        offsets[i] = N_offset; 
     }
 };
 
-template <bool Use32Bits>
-struct Letter {
-    RelativePtr<Use32Bits> data[29] = {}; 
-    void* extra_data = nullptr;
-    bool final_end = false;
-
-    std::tuple<bool, Letter<Use32Bits>*> search(unsigned char i, char* buffer_base) {
-        // Si el índice es mayor a 28, es un error de entrada
-        if (i > 28 || i == 0) {
-            throw std::invalid_argument("Letter::search debe recibir un texto YA mapeado por map_text(char*)");
-        }
-
-        if (!data) {
-            return {false, nullptr};
-        }
-        auto resolved = data[i].template resolve<Letter<Use32Bits>>(buffer_base);
-        if (resolved) {
-            return {true, resolved};
-        }
-        return {false, nullptr};
-    }
-};
-
-template <bool Use32Bits>
 class FlashSearch {
 public:
     char* buffer; 
     size_t size;
-    size_t cursor = 0;
-    Letter<Use32Bits> base;
-    static constexpr size_t MAX_OFFSET = Use32Bits ? 4294967295ULL : 65535ULL;
-    FlashSearch() {
-        // Alocamos en el heap para que el stack esté limpio
-        buffer = new char[16 * 1024];
-        size = 16*1024;
-        std::memset(buffer, 0, 16 * 1024);
-        cursor = sizeof(Letter<Use32Bits>);
-    }
+    size_t cursor = 64;
+    Letter* base;
+    FlashSearch();
 
-    ~FlashSearch() {
-        delete[] buffer;
-    }
+    ~FlashSearch();
 
     template<typename T>
-    std::tuple<T*, bool> allocate() {
-        size_t alignment = alignof(T);
-        size_t padding = (alignment - (cursor % alignment)) % alignment;
-        size_t total_bytes = padding + sizeof(T);
-        bool changedSize = false;
-        if (size - cursor < total_bytes) {
-            size = size * 2;
-            if (size > MAX_OFFSET) {
-                throw std::runtime_error("Error fatal, Memoria no disponible, lo areglaremos pronto");
-            }
-            char* newBuffer = (char*)malloc(size);
-            if (newBuffer == NULL) {
-                throw std::runtime_error("Sin memoria");
-            }
-            memset(newBuffer+(size/2), 0, size/2);
-            memcpy(newBuffer, buffer, size/2);
-            free(buffer);
-            buffer = newBuffer;
-            changedSize = true;
-        }
+    std::tuple<T*, bool, uint32_t, uint16_t> allocate();
 
-        cursor += padding;
-        void* mem = &buffer[cursor];
-        cursor += sizeof(T);
-        
-        return {new (mem) T(), changedSize};
-    }
+    Letter* add(const char* element, size_t s);
 
-    Letter<Use32Bits>* add(const char* element) {
-        Letter<Use32Bits>* actual = &base;
-        
-        for (int i = 0; ; i++) {
-            unsigned char index = static_cast<unsigned char>(element[i]);
+    std::tuple<bool, Letter*> search(const char* name, size_t s);
+    void print();
+    void _print(size_t spaces, Letter* cl);
 
-            if (index > 28) {
-                throw std::invalid_argument("FlashSearch::add debe recibir un texto YA mapeado por map_text(char*)");
-            }
-            if (index == 0) {;
-                actual->final_end = true;
-                break;
-            }
-
-            auto [success, next_letter] = actual->search(index, buffer);
-
-            if (success) {
-                actual = next_letter;
-            } else {
-                // Si no existe el camino, creamos el nodo
-                size_t actual_offset = 0;
-                bool is_base = (actual == &base);
-
-                if (!is_base) {
-                    actual_offset = (char*)actual - buffer;
-                }
-                auto [new_node, expandido] = allocate<Letter<Use32Bits>>();
-                if (expandido && !is_base) {
-                    actual = reinterpret_cast<Letter<Use32Bits>*>(buffer + actual_offset);
-                }
-                actual->data[index].template set<Letter<Use32Bits>>(buffer, new_node);
-                actual = new_node;
-            }
-        }
-        return actual;
-    }
-    std::tuple<bool, Letter<Use32Bits>*> search(const char* name) {
-        Letter<Use32Bits>* actual = &base;
-
-        for (int i = 0; ; i++) {
-            unsigned char index = static_cast<unsigned char>(name[i]);
-            if (index == 0) break; 
-            if (index > 28) {
-                throw std::invalid_argument("FlashSearch::search debe recibir un texto YA mapeado por map_text(char*)");
-            }
-            auto [success, next_letter] = actual->search(index, buffer);
-
-            if (success) {
-                actual = next_letter;
-            } else {
-                return {false, nullptr}; 
-            }
-
-            
-        }
-        if (actual->final_end) {
-            return {true, actual};
-        } else {
-            return {false, nullptr};
-        }
-    }
-    void print() {
-        size_t spaces = 0;
-        _print(spaces, base);
-    }
-    void _print(size_t spaces, Letter<Use32Bits>& cl) {
-        size_t i = 0;
-        for (auto l : cl.data) {
-            size_t lSpaces = spaces;
-            if (l.template resolve<Letter<Use32Bits>>(buffer)) {
-                std::cout << std::string(spaces, ' ') << "Letra: \"" << unmap_fast[i] << "\"\n" << std::string(spaces, ' ') << "Hijos:" << std::endl;
-                lSpaces += 4;
-                _print(lSpaces, *l.template resolve<Letter<Use32Bits>>(buffer));
-            }
-            i += 1;
-        }
-    }
-    inline Letter<Use32Bits>* fast_search(const char* m_text, bool WithPrefetch) {
-        Letter<Use32Bits>* curr = &base;
+    inline Letter* fast_search(const char* m_text, size_t s, bool WithPrefetch) {
+        Letter* curr = base;
         if (WithPrefetch) {
-            for (int i = 0; m_text[i] != 0; ++i) {
-                // Obtenemos el puntero al siguiente nodo
-                RelativePtr<Use32Bits>& next_ptr = curr->data[(unsigned char)m_text[i]];
-                curr = next_ptr.template resolve<Letter<Use32Bits>>(buffer);
-                
+            for (size_t i = 0; i < s; ++i) {
+                curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
                 if (!curr) return nullptr;
 
-                if (m_text[i+1] != 0) {
-                    __builtin_prefetch(curr, 0, 3);
+                if (i == 0) {
+                    // Prefetch agresivo inicial
+                    #pragma GCC unroll 8
+                    for (uint8_t j = 1; j <= 25; ++j) {
+                        __builtin_prefetch(reinterpret_cast<const char*>(curr) + (j * 64), 0, 3);
+                    }
                 }
             }
         } else {
-            for (int i = 0; m_text[i] != 0; ++i) {
-                // Obtenemos el puntero al siguiente nodo
-                RelativePtr<Use32Bits>& next_ptr = curr->data[(unsigned char)m_text[i]];
-                curr = next_ptr.template resolve<Letter<Use32Bits>>(buffer);
-                
+            for (size_t i = 0; i < s; ++i) {
+                curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
                 if (!curr) return nullptr;
-
             }
         }
         return curr->final_end ? curr : nullptr;
     }
-    std::string normalize_utf8(const std::string& input) {
-        std::string resultado = "";
-        for (size_t i = 0; i < input.length(); ++i) {
-            unsigned char c = input[i];
-
-            // Detectar secuencia UTF-8 para caracteres especiales (á, é, í, ó, ú, ñ, etc.)
-            if (c == 0xC3 && i + 1 < input.length()) {
-                unsigned char next = input[++i]; // Consumimos el segundo byte
-                
-                switch (next) {
-                    // Tildes minúsculas y mayúsculas -> Letra base
-                    case 0xA1: case 0x81: resultado += 'a'; break; // á, Á
-                    case 0xA9: case 0x89: resultado += 'e'; break; // é, É
-                    case 0xAD: case 0x8D: resultado += 'i'; break; // í, Í
-                    case 0xB3: case 0x93: resultado += 'o'; break; // ó, Ó
-                    case 0xBA: case 0x9A: resultado += 'u'; break; // ú, Ú
-                    case 0xBC: case 0x9C: resultado += 'u'; break; // ü, Ü
-                    
-                    // La Ñ: la convertimos al byte 241 que definiste
-                    case 0xB1: case 0x91: resultado += (char)241; break; // ñ, Ñ
-                    
-                    default: break; // Ignorar otros caracteres extendidos
-                }
-            }
-            // Letras estándar A-Z -> a-z
-            else if (c >= 'A' && c <= 'Z') {
-                resultado += (char)(c + 32);
-            }
-            // Letras estándar a-z, espacios y el byte 241 (por si ya venía mapeado)
-            else if ((c >= 'a' && c <= 'z') || c == ' ' || c == 241) {
-                resultado += (char)c;
-            }
-            // Todo lo demás (números, símbolos, \r, \n) se descarta
-        }
-        return resultado;
-    }
+    std::string normalize_utf8(const std::string& input);
 };
 extern const std::array<unsigned char, 256> map_fast;
 extern const std::array<unsigned char, 256> unmap_fast;

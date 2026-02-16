@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\FlashUnitTest.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\FlashUnitTest.dir/objects.a @CMakeFiles\FlashUnitTest.dir\objects1.rsp
+C:\msys64\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\FlashUnitTest.dir/objects.a -Wl,--no-whole-archive -o FlashUnitTest.exe -Wl,--out-implib,libFlashUnitTest.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\FlashUnitTest.dir\linkLibs.rsp

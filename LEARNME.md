@@ -59,3 +59,20 @@ Lo hice, esta disponibe en https://github.com/hacker-programer/Flash-Search
 ______
 
 Estoy buscando como optimizar mi rendimiento, para hacerlo se me ocurre usar prefetch no solo para cargar las siguientes letras sino para cargar los siguientes bytes en la memoria para tener las siguientes letras precargadas, para hacerlo bien deberia analizar el numero promedio de hijos de un nodo
+
+mi codigo dio
+PS C:\Users\Administrator\Desktop\updown\Flash Search\build> ./FlashSearch.exe
+Promedio de hijos por nodo: 1.38098
+PS C:\Users\Administrator\Desktop\updown\Flash Search\build>
+pero yo creo que esta sesgado, lo mas probable es que los nodos iniclaes tengan una alta densidad de hijos y los finales baja, combatire esto mostrando la estadistica por nivel.
+Ahora mismo para optimisar esto bien estoy cambiando a usar punteros uint16_t siempre y diferentes paginas de 64 Kib lo que permite que cada nodo quepa en una linea de cache en vez de 2
+
+Ya eh implementado esto, tuve un inconveniente en el proceso por no actualizar bien ReativePtr::Resolve
+
+______
+
+voy a impementar optimisaciones basadas en los analisis
+
+______
+
+pues son a 1 de a mañana, estuve toda la tarde corrigiendo bugs de las paginas, yey supongo, en este proceso me vi obligado a implementar un unit test basico, analizando los benchmarks me di cuenta que los tiempos subieron 60 ns de la version basica,  voy a analizar el porque de eso, estoy descargando google benchmark y traizy profiler de https://github.com/wolfpld/tracy/releases/tag/v0.13.1
