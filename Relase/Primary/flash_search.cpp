@@ -56,13 +56,15 @@ char* map_text(char* text) {
     return text;
 }
 
-char* unmap_text(char* text, size_t s) {
+char* unmap_text(char* text) {
     if (!text) return nullptr;
     
-    for (int i = 0; i<s ; i++) {
+    for (int i = 0; ; i++) {
 
         unsigned char original_byte = static_cast<unsigned char>(text[i]);
-
+        if (original_byte == '\0') {
+            break;
+        }
         unsigned char mapped_value = unmap_fast[original_byte];
 
         if (mapped_value == 255) {

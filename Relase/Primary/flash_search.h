@@ -108,4 +108,4 @@ public:
 extern const std::array<unsigned char, 256> map_fast;
 extern const std::array<unsigned char, 256> unmap_fast;
 char* map_text(char* text);
-char* unmap_text(char* text, size_t s);
+char* unmap_text(char* text);
