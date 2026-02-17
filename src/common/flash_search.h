@@ -14,6 +14,9 @@
 extern const std::array<unsigned char, 256> map_fast;
 extern const std::array<unsigned char, 256> unmap_fast;
 
+#define likely(x)    __builtin_expect(!!(x), 1)
+#define unlikely(x)  __builtin_expect(!!(x), 0)
+
 struct Letter;
 
 struct alignas(64) Letter {
@@ -35,7 +38,7 @@ struct alignas(64) Letter {
     template<typename T>
     inline T* resolve(unsigned char i, void* base_addr) const {
         // Si el offset es 0, no hay hijo
-        if (offsets[i] == 0) return nullptr;
+        if (unlikely(offsets[i] == 0)) return nullptr;
 
         // 1. Calculamos el desplazamiento total usando uintptr_t para evitar desbordamientos
         // Usamos 65536 (1 << 16) para máxima velocidad
@@ -94,7 +97,7 @@ public:
 
     inline Letter* fast_search(const char* m_text, size_t s) {
         Letter* curr = base;
-        for (size_t i = 0; i < s; ++i) {
+        for (size_t i = 0; unlikely(i < s); ++i) {
             curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
             if (!curr) return nullptr;
         }
