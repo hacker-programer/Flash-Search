@@ -3,13 +3,19 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/extern/*",
-                "${workspaceFolder}/src/common/*"
+                "${workspaceFolder}/src/common",
+                "${workspaceFolder}/extern"
             ],
-            "defines": [],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/msys64/mingw64/bin/gcc.exe", 
             "cStandard": "c23",
             "cppStandard": "c++23",
             "intelliSenseMode": "windows-gcc-x64",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json", // ESTA ES LA CLAVE
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],

@@ -92,26 +92,11 @@ public:
     void print();
     void _print(size_t spaces, Letter* cl);
 
-    inline Letter* fast_search(const char* m_text, size_t s, bool WithPrefetch) {
+    inline Letter* fast_search(const char* m_text, size_t s) {
         Letter* curr = base;
-        if (WithPrefetch) {
-            for (size_t i = 0; i < s; ++i) {
-                curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
-                if (!curr) return nullptr;
-
-                if (i == 0) {
-                    // Prefetch agresivo inicial
-                    #pragma GCC unroll 8
-                    for (uint8_t j = 1; j <= 25; ++j) {
-                        __builtin_prefetch(reinterpret_cast<const char*>(curr) + (j * 64), 0, 3);
-                    }
-                }
-            }
-        } else {
-            for (size_t i = 0; i < s; ++i) {
-                curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
-                if (!curr) return nullptr;
-            }
+        for (size_t i = 0; i < s; ++i) {
+            curr = curr->resolve<Letter>((unsigned char)m_text[i], buffer);
+            if (!curr) return nullptr;
         }
         return curr->final_end ? curr : nullptr;
     }

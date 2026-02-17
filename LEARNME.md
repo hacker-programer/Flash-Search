@@ -76,3 +76,37 @@ voy a impementar optimisaciones basadas en los analisis
 ______
 
 pues son a 1 de a mañana, estuve toda la tarde corrigiendo bugs de las paginas, yey supongo, en este proceso me vi obligado a implementar un unit test basico, analizando los benchmarks me di cuenta que los tiempos subieron 60 ns de la version basica,  voy a analizar el porque de eso, estoy descargando google benchmark y traizy profiler de https://github.com/wolfpld/tracy/releases/tag/v0.13.1
+
+______
+
+Eh avanzado, no logro superar a unordered set en tetos largos, a parecer es por que el branch predictor de la CPU falla, estuve investigando y __builtin_expect, antes de seguir como no hice un commit en todo el dia pero estuve trabajando este es el registro de cambios, son las 11:29 AM
+Implemente google benchmark
+estuve testeando cuando WitPrefetch aceleraba y probamdo el codigo, despues como no resulto decidi que nunca y lo elimine, volvera probablemente en el futuro
+Optimise Letter::resolve para usar << 6 enn vez de * 64 que es mas rapido y da lo mismo
+solucione bugs e intente usar profilers que resultaron ser incombatibles con mi hadware
+
+Fuera de lugar aregle gitignore que no andaba por su codificacion, por eso ya no tendras .vscode, pero para hacerlo bien usa la extension oficial de CMAKE y solo pon ahi lo basico, osea para mi seria
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/src/common",
+                "${workspaceFolder}/extern"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/msys64/mingw64/bin/gcc.exe", 
+            "cStandard": "c23",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}
+y adaptalo para tus necesidades, ahi muchas cosas son inecsarias, pero necesitas sobretodo "compileCommands": "${workspaceFolder}/build/compile_commands.json"

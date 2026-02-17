@@ -33,7 +33,7 @@ int main() {
 
         // 2. Prueba con fast_search
         // Usamos 'longitud', NO 'palabra_original.size()'
-        bool fast_ok = search.fast_search(cs, longitud, false);
+        bool fast_ok = search.fast_search(cs, longitud);
         
         if (!fast_ok) {
             std::cout << "¡ERROR! Palabra: [" << palabra_original << "] no encontrada en fast_search." << std::endl;
